@@ -1,0 +1,47 @@
+
+.form-title{
+	margin-top: 1rem;
+	margin-bottom: 5rem;
+}
+
+.fb-pic{
+	height: 150px;
+	width: 150px;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	float: left;
+}
+
+.inaanakName , .ninongName, .favorites , .isNinongKind{
+	margin : 1rem;
+}
+
+.amount{
+	font: italic bold 30px Georgia, serif;
+	color: red;
+}
+
+.submit-sucessful{
+	font: normal bold 30px Georgia, serif;
+	color: green;
+}
+
+.happy{
+	font: italic bold 40px Georgia, serif;
+	color: red;
+}
+
+.error{
+	color:red;
+}
+
+.baby-nf{
+	height: 400px;
+	width: 450px;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+
+.search-btn{
+	align-content: left;
+}
