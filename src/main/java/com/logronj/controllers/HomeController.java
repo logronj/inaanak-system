@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -20,7 +21,7 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping("/submit")
+	@PostMapping("/submit")
 	public String submit(@Valid @ModelAttribute("formDetails") FormDetails formDetails, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
 			for(ObjectError error : bindingResult.getAllErrors())
