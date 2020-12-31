@@ -68,13 +68,11 @@
 				<h4 class="favorites">2. Dahil hindi umiinom ng alak at kumakain ng pulutan si Ninong, anong paboritong pagkain at inumin ni Ninong? 
 				<span class="amount">100.00</span></h4>
 				<textarea id="ninong-favorites" rows="3" cols="2" maxlength="500" path="favoriteFoodAndDrinks" disabled="true"></textarea>
-				<form:errors path="favoriteFoodAndDrinks" cssClass="error m-0 p-0"></form:errors>
 			</div>
 			
 			<div class="row form-group">
 				<h4 class="isNinongKind">3. Mabait ba si Ninong? Bakit? <span class="amount">200.00</span></h4>
 				<textarea id="ninong-kind" rows="5" cols="2" maxlength="500" path="isNinongKind" disabled="true"></textarea>
-				<form:errors path="isNinongKind" cssClass="error m-0 p-0"></form:errors>
 			</div>
 			
 			<div class="row form-group">

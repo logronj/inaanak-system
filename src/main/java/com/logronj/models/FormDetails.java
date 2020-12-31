@@ -11,9 +11,7 @@ public class FormDetails {
 	@Valid
 	private Ninong ninong;
 	private Education education;
-	@NotBlank
 	private String favoriteFoodAndDrinks;
-	@NotBlank
 	private String isNinongKind;
 	
 	public Inaanak getInaanak() {
