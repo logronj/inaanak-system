@@ -11,6 +11,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -53,20 +54,30 @@ public class AppConfig implements WebMvcConfigurer{
 		return jdbcTemplate;
 	}
 	
-	@Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("*");
-        config.addAllowedHeader("*");
-        config.addAllowedMethod("OPTIONS");
-        config.addAllowedMethod("GET");
-        config.addAllowedMethod("POST");
-        config.addAllowedMethod("PUT");
-        config.addAllowedMethod("DELETE");
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
+	@Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")
+            .allowedOrigins("https://https://inaanak-system.herokuapp.com")
+            .allowedMethods("GET")
+            .allowedHeaders("header1", "header2", "header3")
+            .exposedHeaders("header1", "header2")
+            .allowCredentials(false).maxAge(3600);
     }
+	
+//	@Bean
+//    public CorsFilter corsFilter() {
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        CorsConfiguration config = new CorsConfiguration();
+//        config.setAllowCredentials(true);
+//        config.addAllowedOrigin("*");
+//        config.addAllowedHeader("*");
+//        config.addAllowedMethod("OPTIONS");
+//        config.addAllowedMethod("GET");
+//        config.addAllowedMethod("POST");
+//        config.addAllowedMethod("PUT");
+//        config.addAllowedMethod("DELETE");
+//        source.registerCorsConfiguration("/**", config);
+//        return new CorsFilter(source);
+//    }
 	
 }

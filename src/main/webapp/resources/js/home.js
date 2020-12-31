@@ -6,6 +6,7 @@ function getInaanakByUserName(){
 	
 	$('#exampleModal').modal({show: false});
 	
+	
 	$.get(url,function(data,status){
 			console.log(`${data}`);
 			if(`${data}`){
