@@ -2,15 +2,17 @@ function getInaanakByUserName(){
 
 	let fname = document.getElementById("inaanak-fname").value;
 		console.log('test: ' , fname);
-	const url = "http://localhost:8080/inaanak-system/getInaanak/" + fname;
+//	const url = "http://localhost:8080/inaanak-system/getInaanak/" + fname;
+
+	const url = "https://inaanak-system.herokuapp.com/getInaanak/" + fname;
 	
 	$('#exampleModal').modal({show: false});
+	
 	
 	$.get(url,function(data,status){
 			console.log(`${data}`);
 			if(`${data}`){
 				$('#inaanak-found-modal').modal('show');
-				document.getElementById("inaanak-fname").disabled = true;
 				enableOtherFields();
 			}else{
 				$('#inaanak-notfound-modal').modal('show');

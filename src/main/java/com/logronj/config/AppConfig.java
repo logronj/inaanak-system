@@ -26,7 +26,17 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @Configuration
 @ComponentScan(basePackages = "com.logronj")
 public class AppConfig implements WebMvcConfigurer{
-
+	
+	private static final String HOST = "ec2-34-196-34-158.compute-1.amazonaws.com";
+	private static final String PORT = "5432";
+	private static final String PATH = "postgres://edacvgrmdumvfy:a636a6a90467d5daad6c5e42c21ddbae8a9a6b48bb48205d2774dbe12eed5513@ec2-34-196-34-158.compute-1.amazonaws.com:5432/d6jn4b9fdlp9f7";
+	private static final String USER = "edacvgrmdumvfy";
+	private static final String PW = "a636a6a90467d5daad6c5e42c21ddbae8a9a6b48bb48205d2774dbe12eed5513";
+	
+	private static final String LOCALHOST_URL = "jdbc:mysql://localhost:3306/test?serverTimezone=UTC";
+	private static final String LOCALHOST_USER = "logronj";
+	private static final String LOCALHOST_PW = "Logronzkie01";
+	
 	@Bean
 	public InternalResourceViewResolver getViewResolver() {
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
@@ -44,11 +54,11 @@ public class AppConfig implements WebMvcConfigurer{
 	
 	@Bean
 	public DriverManagerDataSource getDriverManagerDataSource() {
-		String url ="jdbc:mysql://localhost:3306/test?serverTimezone=UTC";
-		String username = "logronj";
-		String password = "Logronzkie01";
-		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource(url, username, password);
-		driverManagerDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+		
+		String url = "jdbc:postgresql://" + HOST + ':' + PORT + PATH + "?sslmode=require";
+		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource(url, USER, PW);
+//		driverManagerDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+		driverManagerDataSource.setDriverClassName("org.postgresql.Driver");
 		return driverManagerDataSource;
 	}
 	
