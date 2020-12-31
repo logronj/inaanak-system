@@ -39,7 +39,7 @@ public class AppConfig implements WebMvcConfigurer{
 		String username = "logronj";
 		String password = "Logronzkie01";
 		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource(url, username, password);
-		driverManagerDataSource.setDriverClassName("com.mysql.jdbc.Driver");
+		driverManagerDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 		return driverManagerDataSource;
 	}
 	
