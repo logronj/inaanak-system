@@ -1,9 +1,9 @@
 function getInaanakByUserName(){
 
 	let fname = document.getElementById("inaanak-fname").value;
-	const url = "http://localhost:8080/inaanak-system/getInaanak/" + fname;
+//	const url = "http://localhost:8080/inaanak-system/getInaanak/" + fname;
 
-//	const url = "https://inaanak-system.herokuapp.com/getInaanak/" + fname;
+	const url = "https://inaanak-system.herokuapp.com/getInaanak/" + fname;
 	
 	$('#exampleModal').modal({show: false});
 	
