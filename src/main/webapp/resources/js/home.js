@@ -11,7 +11,6 @@ function getInaanakByUserName(){
 			console.log(`${data}`);
 			if(`${data}`){
 				$('#inaanak-found-modal').modal('show');
-				document.getElementById("inaanak-fname").disabled = true;
 				enableOtherFields();
 			}else{
 				$('#inaanak-notfound-modal').modal('show');
