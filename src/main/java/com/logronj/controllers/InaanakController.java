@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.logronj.repository.InaanakRepository;
 
 @RestController
-@CrossOrigin
 public class InaanakController {
 	
 	@Autowired
