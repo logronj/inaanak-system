@@ -57,10 +57,16 @@ public class AppConfig implements WebMvcConfigurer{
 		
 		String url = "jdbc:postgresql://" + HOST + ':' + PORT + PATH + "?sslmode=require";
 		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource(url, USER, PW);
-//		driverManagerDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 		driverManagerDataSource.setDriverClassName("org.postgresql.Driver");
 		return driverManagerDataSource;
 	}
+	
+//	@Bean
+//	public DriverManagerDataSource getDriverManagerDataSource() {
+//		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource(LOCALHOST_URL, LOCALHOST_USER, LOCALHOST_PW);
+//		driverManagerDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+//		return driverManagerDataSource;
+//	}
 	
 //	@Bean
 //	public DataSource getDriverManagerDataSource() {

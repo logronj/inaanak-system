@@ -21,7 +21,11 @@ public class InaanakController {
 	@GetMapping(value = "/getInaanak/{firstName}")
 	public String getInaanakByFirstName(@PathVariable String firstName) {
 		System.out.println("fn: " + firstName);
+		try {
 		return nameRepository.getInaanakByFirstName(firstName);
+		}catch(Exception e) {
+			return "error";
+		}
 	}
 
 }
