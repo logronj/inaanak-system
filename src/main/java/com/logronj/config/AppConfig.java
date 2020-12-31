@@ -2,12 +2,16 @@ package com.logronj.config;
 
 import java.sql.DriverManager;
 
+import javax.sql.DataSource;
+
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
+import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -21,7 +25,6 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc
 @Configuration
 @ComponentScan(basePackages = "com.logronj")
-@CrossOrigin
 public class AppConfig implements WebMvcConfigurer{
 
 	@Bean
@@ -48,6 +51,18 @@ public class AppConfig implements WebMvcConfigurer{
 		driverManagerDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 		return driverManagerDataSource;
 	}
+	
+//	@Bean
+//	public DataSource getDriverManagerDataSource() {
+//	  return new EmbeddedDatabaseBuilder()
+//	    .generateUniqueName(false)
+//	    .setName("testdb")
+//	    .setType(EmbeddedDatabaseType.H2)
+//	    .addDefaultScripts()
+//	    .setScriptEncoding("UTF-8")
+//	    .ignoreFailedDrops(true)
+//	    .build();
+//	}
 	
 
 	@Bean
