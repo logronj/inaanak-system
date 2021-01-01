@@ -1,17 +1,24 @@
 package com.logronj.config;
 
 import java.sql.DriverManager;
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.PropertySources;
+import org.springframework.core.env.Environment;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -25,17 +32,17 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 @EnableWebMvc
 @Configuration
 @ComponentScan(basePackages = "com.logronj")
+@PropertySources({
+	@PropertySource("classpath:mail.properties"),
+	@PropertySource("classpath:database.properties")
+})
+
 public class AppConfig implements WebMvcConfigurer{
 	
-	private static final String HOST = "ec2-34-196-34-158.compute-1.amazonaws.com";
-	private static final String PORT = "5432";
-	private static final String PATH = "postgres://edacvgrmdumvfy:a636a6a90467d5daad6c5e42c21ddbae8a9a6b48bb48205d2774dbe12eed5513@ec2-34-196-34-158.compute-1.amazonaws.com:5432/d6jn4b9fdlp9f7";
-	private static final String USER = "edacvgrmdumvfy";
-	private static final String PW = "a636a6a90467d5daad6c5e42c21ddbae8a9a6b48bb48205d2774dbe12eed5513";
 	
-	private static final String LOCALHOST_URL = "jdbc:mysql://localhost:3306/test?serverTimezone=UTC";
-	private static final String LOCALHOST_USER = "logronj";
-	private static final String LOCALHOST_PW = "Logronzkie01";
+	@Autowired
+	private Environment env;
+	
 	
 	@Bean
 	public InternalResourceViewResolver getViewResolver() {
@@ -52,39 +59,60 @@ public class AppConfig implements WebMvcConfigurer{
         .addResourceLocations("/resources/");	
 	}
 	
-	@Bean
-	public DriverManagerDataSource getDriverManagerDataSource() {
-		
-		String url = "jdbc:postgresql://" + HOST + ':' + PORT + PATH + "?sslmode=require";
-		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource(url, USER, PW);
-		driverManagerDataSource.setDriverClassName("org.postgresql.Driver");
-		return driverManagerDataSource;
-	}
-	
 //	@Bean
 //	public DriverManagerDataSource getDriverManagerDataSource() {
-//		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource(LOCALHOST_URL, LOCALHOST_USER, LOCALHOST_PW);
-//		driverManagerDataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+//		
+//		String url = "jdbc:postgresql://" + HOST + ':' + PORT + PATH + "?sslmode=require";
+//		DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource(url, USER, PW);
+//		driverManagerDataSource.setDriverClassName("org.postgresql.Driver");
 //		return driverManagerDataSource;
 //	}
 	
-//	@Bean
-//	public DataSource getDriverManagerDataSource() {
-//	  return new EmbeddedDatabaseBuilder()
-//	    .generateUniqueName(false)
-//	    .setName("testdb")
-//	    .setType(EmbeddedDatabaseType.H2)
-//	    .addDefaultScripts()
-//	    .setScriptEncoding("UTF-8")
-//	    .ignoreFailedDrops(true)
-//	    .build();
-//	}
+	@Bean
+	public DriverManagerDataSource getDriverManagerDataSource() {
+		DriverManagerDataSource driverManagerDataSource = 
+				new DriverManagerDataSource(env.getProperty("db.url"), env.getProperty("db.user"), env.getProperty("db.pw"));
+		driverManagerDataSource.setDriverClassName(env.getProperty("db.driverClassName"));
+		return driverManagerDataSource;
+	}
 	
 
 	@Bean
 	public JdbcTemplate getJdbcTemplate() {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(getDriverManagerDataSource());
 		return jdbcTemplate;
+	}
+	
+	
+	/*
+	 * Less secure app must be turned on on google account
+	 * https://myaccount.google.com/lesssecureapps
+	 * */
+	@Bean
+	public JavaMailSender getJavaMailSender() {
+		JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
+		javaMailSender.setHost(env.getProperty("mail.host"));
+		javaMailSender.setUsername(env.getProperty("mail.username"));
+		javaMailSender.setPassword(env.getProperty("mail.password"));
+		javaMailSender.setPort(getIntProperty("mail.port"));
+		
+		Properties mailProperties = getMailProperty();
+		
+		javaMailSender.setJavaMailProperties(mailProperties);
+		
+		return javaMailSender;
+	}
+
+	private Properties getMailProperty() {
+		Properties mailProperties = new Properties();
+		mailProperties.put("mail.smtp.starttls.enable", true);
+		mailProperties.put("mail.smtp.ssl.trust", "smtp.gmail.com");
+		return mailProperties;
+	}
+	
+	private Integer getIntProperty(String key) {
+		String value = env.getProperty(key);
+		return Integer.parseInt(value);
 	}
 	
 }
